@@ -1,5 +1,6 @@
 package de.sixbits.pixaclient.unit.network.service
 
+import de.sixbits.pixaclient.BuildConfig
 import de.sixbits.pixaclient.network.service.PixabayService
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -81,7 +82,7 @@ class TestPixabayService {
         val pixabayService = retrofit.create(PixabayService::class.java)
 
         pixabayService
-            .getSearchResult("fruits")
+            .getSearchResult("fruits", BuildConfig.PIXABAY_KEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

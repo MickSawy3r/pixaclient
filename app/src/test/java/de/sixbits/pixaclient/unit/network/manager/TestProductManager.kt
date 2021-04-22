@@ -1,5 +1,6 @@
 package de.sixbits.pixaclient.unit.network.manager
 
+import de.sixbits.pixaclient.BuildConfig
 import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.service.PixabayService
 import de.sixbits.pixaclient.util.PixabayResponseFactory
@@ -39,7 +40,7 @@ class TestProductManager {
 
         // region Test Good Response
         Mockito
-            .`when`(pixabayService.getSearchResult(searchQuery))
+            .`when`(pixabayService.getSearchResult(searchQuery, BuildConfig.PIXABAY_KEY))
             .thenReturn(Observable.just(PixabayResponseFactory.getResponse()))
 
         pixabayManager.getSearchResult(searchQuery)
@@ -53,7 +54,7 @@ class TestProductManager {
 
         // region Test with Null Response
         Mockito
-            .`when`(pixabayService.getSearchResult(searchQuery))
+            .`when`(pixabayService.getSearchResult(searchQuery, BuildConfig.PIXABAY_KEY))
             .thenReturn(Observable.just(PixabayResponseFactory.getZeroResponse()))
 
         pixabayManager.getSearchResult(searchQuery)
@@ -66,7 +67,7 @@ class TestProductManager {
 
         // region Test with exceptions
         Mockito
-            .`when`(pixabayService.getSearchResult(searchQuery))
+            .`when`(pixabayService.getSearchResult(searchQuery, BuildConfig.PIXABAY_KEY))
             .thenReturn(Observable.error(Exception("Bad Response")))
 
         pixabayManager.getSearchResult(searchQuery)
