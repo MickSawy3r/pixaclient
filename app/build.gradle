@@ -59,6 +59,13 @@ dependencies {
     def coroutines_test_version = "1.4.3"
     def coroutines_version = "1.4.1"
     def truth_version = "1.1.2"
+    def room_version = "2.3.0"
+
+    // region Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
+    // endregion
 
     // region Networking
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
