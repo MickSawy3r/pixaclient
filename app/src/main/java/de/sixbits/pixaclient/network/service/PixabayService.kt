@@ -7,5 +7,5 @@ import retrofit2.http.Path
 
 interface PixabayService {
     @GET("{query}")
-    fun getSearchResult(@Path("query") query: String): Observable<PixabaySearchResponse?>
+    fun getSearchResult(@Path("query") query: String): Observable<PixabaySearchResponse>
 }
