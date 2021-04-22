@@ -52,6 +52,12 @@ class pixabaySteps : En {
                     assert(it.isNotEmpty())
                 }
         }
+        When("I request an image with a valid id {int}") { imageId: Int ->
+
+        }
+        Then("I should get an Image from user {string}") { authorName: String ->
+
+        }
     }
 
     companion object {
