@@ -8,5 +8,14 @@ import retrofit2.http.Query
 
 interface PixabayService {
     @GET("/api/")
-    fun getSearchResult(@Query("q") query: String, @Query("key") apiKey: String): Observable<PixabaySearchResponse>
+    fun getSearchResult(
+        @Query("q") query: String,
+        @Query("key") apiKey: String
+    ): Observable<PixabaySearchResponse>
+
+    @GET("/api/")
+    fun getImageDetails(
+        @Query("id") id: Int,
+        @Query("key") apiKey: String
+    ): Observable<PixabaySearchResponse>
 }
