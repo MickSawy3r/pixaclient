@@ -14,6 +14,5 @@ data class ImageEntity(
     @ColumnInfo(name = "likes") val likes: Int,
     @ColumnInfo(name = "favorites") val favorites: Int,
     @ColumnInfo(name = "comments") val comments: Int,
-    @ColumnInfo(name = "created_at") val createdAt: Date,
-    @ColumnInfo(name = "updated_at") val updatedAt: Date
+    @ColumnInfo(name = "created_at") val createdAt: Date
 )

@@ -11,6 +11,9 @@ interface CacheDao {
     @Query("SELECT * from image_entity")
     fun getAll(): List<ImageEntity>
 
+    @Query("SELECT * from image_entity where id = :id")
+    fun getById(id: Int): ImageEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(image: ImageEntity)
 }
