@@ -32,11 +32,13 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
 
-        ViewModelProvider(this, viewModelFactory)
-            .get(MainViewModel::class.java)
+        detailsViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(DetailsViewModel::class.java)
 
         detailsViewModel.detailsLiveData.observe(this, {
             Log.d(TAG, "onCreate: ${it.username}")
         })
+
+        detailsViewModel.getImageDetails(195893)
     }
 }

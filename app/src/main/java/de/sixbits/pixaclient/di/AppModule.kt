@@ -56,11 +56,13 @@ open class AppModule {
     @Singleton
     @Provides
     fun provideDatabase(application: Application): CacheDatabase {
-        return Room.databaseBuilder(
-            application,
-            CacheDatabase::class.java,
-            "cache-database.db"
-        ).build()
+        return Room
+            .databaseBuilder(
+                application,
+                CacheDatabase::class.java,
+                "cache-database.db"
+            )
+            .build()
     }
 
     // Provide here
