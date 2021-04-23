@@ -10,6 +10,7 @@ import de.sixbits.pixaclient.database.entities.ImageEntity
 @Database(
     entities = [ImageEntity::class],
     version = 1,
+    exportSchema = false
 )
 @TypeConverters(DateConverter::class)
 abstract class CacheDatabase : RoomDatabase() {

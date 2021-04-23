@@ -5,6 +5,8 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import de.sixbits.pixaclient.MyApplication
+import de.sixbits.pixaclient.main.MainComponent
+import de.sixbits.pixaclient.network.NetworkComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -20,4 +22,7 @@ interface AppComponent : AndroidInjector<MyApplication> {
         // With @BindsInstance, the Context passed in will be available in the graph
         fun create(@BindsInstance context: Context): AppComponent
     }
+
+    fun networkComponent(): NetworkComponent.Factory
+    fun mainComponent(): MainComponent.Factory
 }

@@ -7,6 +7,8 @@ import com.bumptech.glide.request.RequestOptions
 import dagger.Module
 import dagger.Provides
 import de.sixbits.pixaclient.config.Consts
+import de.sixbits.pixaclient.main.MainComponent
+import de.sixbits.pixaclient.network.NetworkComponent
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -14,7 +16,8 @@ import javax.inject.Singleton
 
 @Module(
     subcomponents = [
-
+        NetworkComponent::class,
+        MainComponent::class
     ]
 )
 open class AppModule {
@@ -31,7 +34,10 @@ open class AppModule {
 
     @Singleton
     @Provides
-    fun provideGlideInstance(application: Application, requestOptions: RequestOptions): RequestManager {
+    fun provideGlideInstance(
+        application: Application,
+        requestOptions: RequestOptions
+    ): RequestManager {
         return Glide.with(application)
             .setDefaultRequestOptions(requestOptions)
     }
