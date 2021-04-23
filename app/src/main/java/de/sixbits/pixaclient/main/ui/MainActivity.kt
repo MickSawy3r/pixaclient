@@ -21,6 +21,7 @@ import de.sixbits.pixaclient.databinding.ActivityMainBinding
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.main.adapters.SearchResultRecyclerAdapter
 import de.sixbits.pixaclient.main.callbacks.OnImageClickListener
+import de.sixbits.pixaclient.main.keys.IntentKeys
 import de.sixbits.pixaclient.main.view_model.MainViewModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel
 import javax.inject.Inject
@@ -76,9 +77,9 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     @SuppressLint("SetTextI18n")
     private fun initViews() {
         if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
-            binding.rvSearchResult.layoutManager = GridLayoutManager(this,  2)
+            binding.rvSearchResult.layoutManager = GridLayoutManager(this, 2)
         } else {
-            binding.rvSearchResult.layoutManager = GridLayoutManager(this,  1)
+            binding.rvSearchResult.layoutManager = GridLayoutManager(this, 1)
         }
         binding.tilSearchBar.setEndIconOnClickListener {
             mainViewModel.searchFor(binding.etSearchBar.text.toString())
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
             .setMessage("Are you sure you want to view this entry?")
             .setPositiveButton("Yes") { _, _ ->
                 val intent = Intent(this, DetailsActivity::class.java)
-                intent.putExtra("id", id)
+                intent.putExtra(IntentKeys.DETAILS_ID_KEY, id)
                 startActivity(intent)
             }
             .setNegativeButton("No") { _, _ ->
