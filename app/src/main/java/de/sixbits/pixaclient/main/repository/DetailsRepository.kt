@@ -22,10 +22,11 @@ class DetailsRepository @Inject constructor(
      * If the API has some error, get the cached version
      */
     fun getImageDetails(id: Int): Observable<ImageDetailsModel> {
+        // When we get the data, cache it without consuming it.
         return this.pixabayManager.getImageDetails(id)
             .doOnNext {
                 // Cache the result
-                Observable.fromCallable { cacheDao.insert(ImageEntityMapper.fromImageDetailsModel(it)) }
+                cacheDao.insert(ImageEntityMapper.fromImageDetailsModel(it))
                     .subscribeOn(Schedulers.io())
                     .subscribe {
                         Log.d(TAG, "getImageDetails: Cached!")
