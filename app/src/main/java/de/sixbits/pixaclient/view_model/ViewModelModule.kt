@@ -10,19 +10,16 @@ import de.sixbits.pixaclient.main.view_model.MainViewModel
 
 @Module
 abstract class ViewModelModule {
-
-    @Binds
-    internal abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
     @Binds
     @IntoMap
     @ViewModelKey(MainViewModel::class)
-    internal abstract fun mainViewModel(viewModel: MainViewModel): ViewModel
+    abstract fun bindsMainViewModel(viewModel: MainViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(DetailsViewModel::class)
-    internal abstract fun detailsViewModel(viewModel: DetailsViewModel): ViewModel
+    abstract fun bindsDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 
-    //Add more ViewModels here
+    @Binds
+    abstract fun bindsViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }

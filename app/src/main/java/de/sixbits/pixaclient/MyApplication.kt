@@ -10,8 +10,8 @@ class MyApplication : Application() {
     }
 
     private fun initializeComponent(): AppComponent {
-        return DaggerAppComponent
-            .factory()
-            .create(applicationContext)
+        return DaggerAppComponent.builder()
+            .application(this)
+            .build()
     }
 }

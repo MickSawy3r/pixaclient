@@ -7,11 +7,4 @@ import de.sixbits.pixaclient.database.database.CacheDatabase
 import javax.inject.Singleton
 
 @Module
-class DatabaseModule {
-    // Provide here
-    @Singleton
-    @Provides
-    fun provideCacheDao(cacheDatabase: CacheDatabase): CacheDao {
-        return cacheDatabase.cacheDao()
-    }
-}
+class DatabaseModule
