@@ -1,13 +1,16 @@
 package de.sixbits.pixaclient.main.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
@@ -72,7 +75,11 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
 
     @SuppressLint("SetTextI18n")
     private fun initViews() {
-        binding.rvSearchResult.layoutManager = LinearLayoutManager(this)
+        if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
+            binding.rvSearchResult.layoutManager = GridLayoutManager(this,  2)
+        } else {
+            binding.rvSearchResult.layoutManager = GridLayoutManager(this,  1)
+        }
         binding.tilSearchBar.setEndIconOnClickListener {
             mainViewModel.searchFor(binding.etSearchBar.text.toString())
         }

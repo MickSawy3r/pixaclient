@@ -65,6 +65,7 @@ dependencies {
     def room_version = "2.3.0"
     def lifecycle_version = "2.3.1"
     def lifecycle_extensions_version = "2.2.0"
+    def leakcanary_version = "2.7"
 
     // region Room
     implementation "androidx.room:room-runtime:$room_version"
@@ -148,5 +149,9 @@ dependencies {
     // region JVM Integration testing with BDD and Cucmber
     testImplementation "io.cucumber:cucumber-java8:$cucumber_version"
     testImplementation "io.cucumber:cucumber-junit:$cucumber_version"
+    // endregion
+
+    // region Leak Canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     // endregion
 }
