@@ -8,12 +8,14 @@ import de.sixbits.pixaclient.MyApplication
 import de.sixbits.pixaclient.database.DatabaseComponent
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
+import de.sixbits.pixaclient.view_model.ViewModelModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     modules = [
-        AppModule::class
+        AppModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent : AndroidInjector<MyApplication> {
