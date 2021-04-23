@@ -1,6 +1,7 @@
 package de.sixbits.pixaclient.main
 
 import dagger.Subcomponent
+import de.sixbits.pixaclient.main.ui.DetailsActivity
 import de.sixbits.pixaclient.main.ui.MainActivity
 
 @Subcomponent(modules = [
@@ -12,4 +13,5 @@ interface MainComponent {
     }
 
     fun inject(activity: MainActivity)
+    fun inject(activity: DetailsActivity)
 }
