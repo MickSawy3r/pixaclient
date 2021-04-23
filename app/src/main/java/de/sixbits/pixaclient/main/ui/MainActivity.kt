@@ -1,14 +1,23 @@
 package de.sixbits.pixaclient.main.ui
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import de.sixbits.pixaclient.MyApplication
 import de.sixbits.pixaclient.R
 import de.sixbits.pixaclient.main.MainComponent
+import de.sixbits.pixaclient.main.view_model.MainViewModel
+import javax.inject.Inject
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
     lateinit var mainComponent: MainComponent
+    lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Inject
@@ -21,6 +30,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this, DetailsActivity::class.java))
+        mainViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(MainViewModel::class.java)
+
+        mainViewModel.imageListLiveData.observe(this, {
+            Log.d(TAG, "onCreate: ${it.size}")
+        })
+
+        mainViewModel.getCachedImages()
     }
 }
