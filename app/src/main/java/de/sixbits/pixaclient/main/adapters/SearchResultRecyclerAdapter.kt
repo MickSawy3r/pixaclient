@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
 import de.sixbits.pixaclient.databinding.RowImagesListBinding
+import de.sixbits.pixaclient.main.callbacks.OnImageClickListener
 import de.sixbits.pixaclient.network.model.ImageListItemModel
 
 class SearchResultRecyclerAdapter constructor(
     private val searchResult: List<ImageListItemModel>,
-    private val requestBuilder: RequestBuilder<Drawable>
+    private val requestBuilder: RequestBuilder<Drawable>,
+    private val onImageClickListener: OnImageClickListener
 ) :
     RecyclerView.Adapter<SearchResultRecyclerAdapter.SearchResultRecyclerViewHolder>(),
     ListPreloader.PreloadModelProvider<ImageListItemModel> {
@@ -37,6 +39,10 @@ class SearchResultRecyclerAdapter constructor(
         holder.binding.tvImageItemTags.text = searchResult[position].tags
         requestBuilder.load(searchResult[position].thumbnail)
             .into(holder.binding.ivImageItemThumbnail)
+
+        holder.binding.ivImageItemThumbnail.setOnClickListener{
+            onImageClickListener.onClick(searchResult[position].id)
+        }
     }
 
     override fun getItemCount(): Int = searchResult.size
