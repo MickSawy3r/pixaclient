@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
     sourceSets {
         test {
             assets.srcDirs = ['src/test/assets']

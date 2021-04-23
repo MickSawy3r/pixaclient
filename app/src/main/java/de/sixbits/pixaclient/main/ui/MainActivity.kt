@@ -16,8 +16,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var mainComponent: MainComponent
-    lateinit var mainViewModel: MainViewModel
+    private lateinit var mainComponent: MainComponent
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Inject
