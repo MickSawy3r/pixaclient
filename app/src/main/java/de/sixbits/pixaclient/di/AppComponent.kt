@@ -5,6 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import de.sixbits.pixaclient.MyApplication
+import de.sixbits.pixaclient.database.DatabaseComponent
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
 import javax.inject.Singleton
@@ -25,4 +26,5 @@ interface AppComponent : AndroidInjector<MyApplication> {
 
     fun networkComponent(): NetworkComponent.Factory
     fun mainComponent(): MainComponent.Factory
+    fun databaseComponent(): DatabaseComponent.Factory
 }
