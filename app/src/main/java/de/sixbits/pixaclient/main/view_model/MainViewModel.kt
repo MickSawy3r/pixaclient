@@ -12,14 +12,32 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
     val imageListLiveData = MutableLiveData<List<ImageListItemModel>>()
+    val loadingLiveData = MutableLiveData<Boolean>()
 
     fun getCachedImages() {
+        loadingLiveData.postValue(true)
+
         val compositeDisposable = CompositeDisposable()
         val cachedObservable = mainRepository.getCached()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 imageListLiveData.postValue(it)
+                loadingLiveData.postValue(false)
+            }
+        compositeDisposable.add(cachedObservable)
+    }
+
+    fun searchFor(query: String) {
+        loadingLiveData.postValue(true)
+
+        val compositeDisposable = CompositeDisposable()
+        val cachedObservable = mainRepository.searchFor(query)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                imageListLiveData.postValue(it)
+                loadingLiveData.postValue(false)
             }
         compositeDisposable.add(cachedObservable)
     }
