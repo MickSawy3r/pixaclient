@@ -7,6 +7,7 @@ import de.sixbits.pixaclient.network.response.PixabaySearchResponse
 object ImageDetailsMapper {
     fun fromImageListItemModel(it: PixabaySearchResponse.Hit): ImageDetailsModel {
         return ImageDetailsModel(
+            id = it.id,
             image = it.largeImageURL,
             username = it.user,
             tags = it.tags,

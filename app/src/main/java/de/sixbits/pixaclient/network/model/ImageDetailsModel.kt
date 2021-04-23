@@ -1,6 +1,7 @@
 package de.sixbits.pixaclient.network.model
 
 data class ImageDetailsModel constructor(
+    val id: Int,
     val image: String,
     val username: String,
     val tags: String,
