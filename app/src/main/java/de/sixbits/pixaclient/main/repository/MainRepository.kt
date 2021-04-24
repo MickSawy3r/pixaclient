@@ -1,7 +1,5 @@
 package de.sixbits.pixaclient.main.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import de.sixbits.pixaclient.database.dao.CacheDao
 import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.model.ImageListItemModel
