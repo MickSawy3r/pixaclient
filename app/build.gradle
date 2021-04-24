@@ -135,6 +135,10 @@ dependencies {
     testImplementation "com.squareup.okhttp3:mockwebserver:$okHttp_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
     testImplementation "org.mockito:mockito-inline:$mockito_version"
+
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okHttp_version"
+    androidTestImplementation "org.mockito:mockito-core:$mockito_version"
+    androidTestImplementation "org.mockito:mockito-inline:$mockito_version"
     // endregion
 
     // region Truths
