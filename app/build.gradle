@@ -178,7 +178,7 @@ dependencies {
     androidTestImplementation "androidx.test:core-ktx:$androidx_test_version"
     androidTestImplementation "androidx.test:runner:$androidx_test_version"
     androidTestImplementation "androidx.test:rules:$androidx_test_version"
-
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
     // endregion
 
     // region AndroidX Test Extentions
