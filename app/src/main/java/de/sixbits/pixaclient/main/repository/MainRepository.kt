@@ -7,7 +7,7 @@ import de.sixbits.pixaclient.network.utils.ImageListMapper
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class MainRepository @Inject constructor(
+open class MainRepository @Inject constructor(
     private val pixabayManager: PixabayManager,
     private val cacheDao: CacheDao
 ) {

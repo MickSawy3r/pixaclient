@@ -1,5 +1,6 @@
 package de.sixbits.pixaclient.unit.main.repository
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.sixbits.pixaclient.ImageResponseFactory
 import de.sixbits.pixaclient.database.dao.CacheDao
 import de.sixbits.pixaclient.database.utils.ImageEntityMapper
@@ -12,7 +13,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyInt
@@ -22,6 +25,9 @@ import org.mockito.kotlin.any
 
 @RunWith(JUnit4::class)
 class TestDetailsRepository {
+
+    @get:Rule
+    var rule: TestRule = InstantTaskExecutorRule()
 
     @Before
     fun setUp() {

@@ -35,10 +35,12 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         val cachedObservable = mainRepository.searchFor(query)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
+            .subscribe({
                 imageListLiveData.postValue(it)
                 loadingLiveData.postValue(false)
-            }
+            }, {
+                imageListLiveData.postValue(listOf())
+            })
         compositeDisposable.add(cachedObservable)
     }
 }
