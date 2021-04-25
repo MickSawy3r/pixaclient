@@ -1,13 +1,13 @@
-package de.sixbits.pixaclient.cucumber.di
+package de.sixbits.pixaclient.e2e.di
 
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import de.sixbits.pixaclient.database.DatabaseComponent
+import de.sixbits.pixaclient.e2e.TestMyApplication
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
-import de.sixbits.pixaclient.cucumber.TestMyApplication
 import de.sixbits.pixaclient.view_model.ViewModelModule
 import javax.inject.Singleton
 
@@ -31,3 +31,6 @@ interface TestAppComponent : AndroidInjector<TestMyApplication> {
     fun mainComponent(): MainComponent.Factory
     fun databaseComponent(): DatabaseComponent.Factory
 }
+
+
+

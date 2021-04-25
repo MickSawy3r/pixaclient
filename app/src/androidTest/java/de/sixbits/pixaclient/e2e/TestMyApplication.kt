@@ -1,8 +1,8 @@
-package de.sixbits.pixaclient.cucumber
+package de.sixbits.pixaclient.e2e
 
 import android.app.Application
-import de.sixbits.pixaclient.cucumber.di.TestAppComponent
-import de.sixbits.pixaclient.cucumber.di.DaggerTestAppComponent
+import de.sixbits.pixaclient.e2e.di.DaggerTestAppComponent
+import de.sixbits.pixaclient.e2e.di.TestAppComponent
 
 class TestMyApplication : Application() {
 

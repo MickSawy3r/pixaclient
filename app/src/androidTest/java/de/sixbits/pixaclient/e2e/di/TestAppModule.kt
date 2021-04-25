@@ -1,4 +1,4 @@
-package de.sixbits.pixaclient.cucumber.di
+package de.sixbits.pixaclient.e2e.di
 
 import android.app.Application
 import androidx.room.Room
