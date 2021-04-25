@@ -1,4 +1,4 @@
-package de.sixbits.pixaclient.unit.di
+package de.sixbits.pixaclient.cucumber.di
 
 import android.app.Application
 import dagger.BindsInstance
@@ -7,7 +7,7 @@ import dagger.android.AndroidInjector
 import de.sixbits.pixaclient.database.DatabaseComponent
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
-import de.sixbits.pixaclient.unit.TestMyApplication
+import de.sixbits.pixaclient.cucumber.TestMyApplication
 import de.sixbits.pixaclient.view_model.ViewModelModule
 import javax.inject.Singleton
 

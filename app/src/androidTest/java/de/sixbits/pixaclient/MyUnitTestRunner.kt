@@ -3,7 +3,7 @@ package de.sixbits.pixaclient
 import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
-import de.sixbits.pixaclient.unit.TestMyApplication
+import de.sixbits.pixaclient.cucumber.TestMyApplication
 
 class MyUnitTestRunner : AndroidJUnitRunner() {
 
