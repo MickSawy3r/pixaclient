@@ -18,7 +18,7 @@ import org.mockito.Mockito.mock
 
 
 @RunWith(JUnit4::class)
-class TestProductManager {
+class TestPixabayManager {
 
     lateinit var pixabayManager: PixabayManager
     lateinit var pixabayService: PixabayService
