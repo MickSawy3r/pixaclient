@@ -1,4 +1,4 @@
-package de.sixbits.pixaclient.util
+package de.sixbits.pixaclient
 
 import de.sixbits.pixaclient.network.model.ImageDetailsModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel

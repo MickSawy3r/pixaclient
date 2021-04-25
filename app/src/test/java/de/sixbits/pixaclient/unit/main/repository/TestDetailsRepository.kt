@@ -1,10 +1,10 @@
 package de.sixbits.pixaclient.unit.main.repository
 
+import de.sixbits.pixaclient.ImageResponseFactory
 import de.sixbits.pixaclient.database.dao.CacheDao
 import de.sixbits.pixaclient.database.utils.ImageEntityMapper
 import de.sixbits.pixaclient.main.repository.DetailsRepository
 import de.sixbits.pixaclient.network.manager.PixabayManager
-import de.sixbits.pixaclient.util.ImageResponseFactory
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins

@@ -1,7 +1,6 @@
-package de.sixbits.pixaclient.util
+package de.sixbits.pixaclient
 
 import de.sixbits.pixaclient.database.entities.ImageEntity
-import de.sixbits.pixaclient.network.model.ImageListItemModel
 import java.util.*
 
 object ImageEntityFactory {

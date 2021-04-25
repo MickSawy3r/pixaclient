@@ -1,9 +1,9 @@
 package de.sixbits.pixaclient.unit.network.manager
 
 import de.sixbits.pixaclient.BuildConfig
+import de.sixbits.pixaclient.PixabayResponseFactory
 import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.service.PixabayService
-import de.sixbits.pixaclient.util.PixabayResponseFactory
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers

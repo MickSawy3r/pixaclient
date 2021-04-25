@@ -22,8 +22,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
     plugin = [
         "pretty"
     ],
-    features = ["src/test/assets/features"],
-//    publish = true
+    features = ["src/test/assets/features"]
 )
 class pixabaySteps : En {
     init {

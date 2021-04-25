@@ -1,9 +1,9 @@
 package de.sixbits.pixaclient.unit.main.view_model
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import de.sixbits.pixaclient.ImageResponseFactory
 import de.sixbits.pixaclient.main.repository.MainRepository
 import de.sixbits.pixaclient.main.view_model.MainViewModel
-import de.sixbits.pixaclient.util.ImageResponseFactory
 import io.reactivex.Observable
 import org.junit.Test
 import org.junit.runner.RunWith

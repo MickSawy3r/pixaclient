@@ -4,21 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
+import de.sixbits.pixaclient.ImageEntityFactory
 import de.sixbits.pixaclient.database.dao.CacheDao
 import de.sixbits.pixaclient.database.database.CacheDatabase
-import de.sixbits.pixaclient.util.ImageEntityFactory
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.observers.BaseTestConsumer
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.schedulers.TestScheduler
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
