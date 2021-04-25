@@ -15,7 +15,7 @@ import de.sixbits.pixaclient.network.utils.ImageListMapper
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class PixabayManager @Inject constructor(private val pixabayService: PixabayService) {
+open class PixabayManager @Inject constructor(private val pixabayService: PixabayService) {
 
     /**
      * Mapping Search result into consumables by the UI. No over-fetching should happen when it

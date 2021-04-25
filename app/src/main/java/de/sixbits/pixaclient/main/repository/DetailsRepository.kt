@@ -27,10 +27,6 @@ class DetailsRepository @Inject constructor(
             .doOnNext {
                 // Cache the result
                 cacheDao.insert(ImageEntityMapper.fromImageDetailsModel(it))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe {
-                        Log.d(TAG, "getImageDetails: Cached!")
-                    }
             }
     }
 }
