@@ -9,6 +9,7 @@ import de.sixbits.pixaclient.databinding.ActivityDetailsBinding
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.main.keys.IntentKeys
 import de.sixbits.pixaclient.main.view_model.DetailsViewModel
+import org.jetbrains.annotations.TestOnly
 import javax.inject.Inject
 
 
@@ -34,10 +35,17 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        detailsViewModel = ViewModelProvider(this, viewModelFactory)
+            .get(DetailsViewModel::class.java)
+
         initViews()
-        initViewModels()
 
         detailsViewModel.getImageDetails(intent.getIntExtra(IntentKeys.DETAILS_ID_KEY, -1))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initViewModels()
     }
 
     private fun initViews() {
@@ -47,9 +55,6 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun initViewModels() {
-        detailsViewModel = ViewModelProvider(this, viewModelFactory)
-            .get(DetailsViewModel::class.java)
-
         detailsViewModel.detailsLiveData.observe(this, {
             binding.tvDetailsComments.text = "${it.comments}"
             binding.tvDetailsLikes.text = "${it.likes}"
@@ -60,5 +65,10 @@ class DetailsActivity : AppCompatActivity() {
                 .load(it.image)
                 .into(binding.ivDetailsImage)
         })
+    }
+
+    @TestOnly
+    fun setTestViewModel(testViewModel: DetailsViewModel) {
+        detailsViewModel = testViewModel
     }
 }
