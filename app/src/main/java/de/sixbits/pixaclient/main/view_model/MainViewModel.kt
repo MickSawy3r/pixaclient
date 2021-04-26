@@ -15,8 +15,8 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     val pagerLiveData = MutableLiveData<List<ImageListItemModel>>()
     val loadingLiveData = MutableLiveData<Boolean>()
 
-    lateinit var activeSearchQuery: String
-    var activePage = 1
+    private var activeSearchQuery = ""
+    private var activePage = 1
 
     fun getCachedImages() {
         loadingLiveData.postValue(true)

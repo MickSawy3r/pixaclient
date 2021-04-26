@@ -16,7 +16,7 @@ object NetworkUtils {
         val actNw =
             connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
 
-        if(actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+        if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
             return true
         }
         if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
@@ -25,7 +25,16 @@ object NetworkUtils {
         if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
             return true
         }
-        if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+        if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_VPN) && actNw.hasTransport(
+                NetworkCapabilities.TRANSPORT_WIFI
+            )
+        ) {
+            return true
+        }
+        if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_VPN) && actNw.hasTransport(
+                NetworkCapabilities.TRANSPORT_WIFI
+            )
+        ) {
             return true
         }
 

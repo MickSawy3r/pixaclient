@@ -3,6 +3,8 @@ package de.sixbits.pixaclient.main.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.*
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -102,8 +104,10 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
             binding.etSearchBar.setQuery("Fruits", true)
             mainViewModel.searchFor(binding.etSearchBar.query.toString())
         } else {
-            binding.etSearchBar.isClickable = false
-            binding.etSearchBar.setQuery("Offline Mode", true)
+            binding.searchDisableOverlay.visibility = VISIBLE
+            binding.searchDisableOverlay.setOnClickListener {
+                Toast.makeText(this, "Offline Mode", Toast.LENGTH_SHORT).show()
+            }
             mainViewModel.getCachedImages()
         }
     }
@@ -150,7 +154,9 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
                     if (loading && canLoadMorePages &&
                         (visibleItemCount + pastVisiblesItems) >= totalItemCount
                     ) {
-                        mainViewModel.requestMoreImage()
+                        if (NetworkUtils.isInternetAvailable(recyclerView.context)) {
+                            mainViewModel.requestMoreImage()
+                        }
                     }
                 }
             }

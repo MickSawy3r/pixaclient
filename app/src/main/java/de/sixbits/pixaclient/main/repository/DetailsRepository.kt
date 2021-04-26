@@ -34,6 +34,9 @@ class DetailsRepository @Inject constructor(
                 .doOnNext {
                     // Cache the result
                     cacheDao.insert(ImageEntityMapper.fromImageDetailsModel(it))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .subscribe()
                 }
         } else {
             return this.cacheDao.getById(id).map {
