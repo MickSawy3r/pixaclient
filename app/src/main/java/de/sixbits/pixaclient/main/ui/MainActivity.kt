@@ -54,21 +54,24 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewModel()
-        initViews()
-        initRecyclerView()
-    }
-
-    private fun initViewModel() {
         mainViewModel = ViewModelProvider(
             this,
             viewModelFactory
         ).get(MainViewModel::class.java)
 
+        initViews()
+        initRecyclerView()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+
         // Handle data response
         mainViewModel.searchImagesLiveData.observe(this, {
-            binding.pbLoadingSearchResult.visibility = GONE
-            binding.rvSearchResult.visibility = VISIBLE
             searchRecyclerAdapter.switchItems(it)
         })
 

@@ -29,6 +29,7 @@ import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnit
 import org.mockito.junit.MockitoRule
 import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.any
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.Shadows
@@ -53,20 +54,20 @@ class TestMainActivity {
     @Mock
     private lateinit var searchImagesLiveData: MutableLiveData<List<ImageListItemModel>>
 
+    @Captor
+    private lateinit var searchImagesObservableCaptor: ArgumentCaptor<Observer<List<ImageListItemModel>>>
+
     @Mock
     private lateinit var pagerLiveData: MutableLiveData<List<ImageListItemModel>>
+
+    @Captor
+    private lateinit var pagerObservableCaptor: ArgumentCaptor<Observer<List<ImageListItemModel>>>
 
     @Mock
     private lateinit var loadingLiveData: MutableLiveData<Boolean>
 
     @Captor
-    private lateinit var pagerObserverCaptor: ArgumentCaptor<Observer<List<ImageListItemModel>>>
-
-    @Captor
-    private lateinit var searchImagesObserverCaptor: ArgumentCaptor<Observer<List<ImageListItemModel>>>
-
-    @Captor
-    private lateinit var loadingObserverCaptor: ArgumentCaptor<Observer<Boolean>>
+    private lateinit var loadingObservableCaptor: ArgumentCaptor<Observer<Boolean>>
 
     @Rule
     @JvmField
@@ -87,18 +88,19 @@ class TestMainActivity {
         shadowOf(getMainLooper()).idle()
 
         activityController.start()
-//        verify(loadingLiveData).observe(
-//            ArgumentMatchers.any(LifecycleOwner::class.java),
-//            loadingObserverCaptor.capture()
-//        )
-//        verify(pagerLiveData).observe(
-//            ArgumentMatchers.any(LifecycleOwner::class.java),
-//            pagerObserverCaptor.capture()
-//        )
-//        verify(searchImagesLiveData).observe(
-//            ArgumentMatchers.any(LifecycleOwner::class.java),
-//            searchImagesObserverCaptor.capture()
-//        )
+
+        verify(searchImagesLiveData).observe(
+            ArgumentMatchers.any(LifecycleOwner::class.java),
+            searchImagesObservableCaptor.capture()
+        )
+        verify(loadingLiveData).observe(
+            ArgumentMatchers.any(LifecycleOwner::class.java),
+            loadingObservableCaptor.capture()
+        )
+        verify(pagerLiveData).observe(
+            ArgumentMatchers.any(LifecycleOwner::class.java),
+            pagerObservableCaptor.capture()
+        )
     }
 
     @LooperMode(LooperMode.Mode.PAUSED)
@@ -115,22 +117,20 @@ class TestMainActivity {
         )
     }
 
-//    @LooperMode(LooperMode.Mode.PAUSED)
-//    @Test
-//    fun `adapter values should change when get search result`() {
-//        val imagesResponse = listOf(ImageResponseFactory.getImageListItem())
-//        searchImagesObserverCaptor.capture().onChanged(imagesResponse)
-//
-//        Shadows.shadowOf(Looper.getMainLooper()).idle()
-//
-//        assertEquals(
-//            View.VISIBLE,
-//            activity.findViewById<RecyclerView>(R.id.rv_search_result).visibility
-//        )
-//        assertEquals(
-//            View.GONE,
-//            activity.findViewById<CircularProgressIndicator>(R.id.pb_loading_search_result).visibility
-//        )
-//        assertEquals(1, activity.findViewById<RecyclerView>(R.id.rv_search_result).childCount)
-//    }
+    @LooperMode(LooperMode.Mode.PAUSED)
+    @Test
+    fun `when loading finishes the recycler should be visible and the loading indicator should go`() {
+        loadingObservableCaptor.value.onChanged(false)
+
+        shadowOf(getMainLooper()).idle()
+
+        assertEquals(
+            View.VISIBLE,
+            activity.findViewById<RecyclerView>(R.id.rv_search_result).visibility
+        )
+        assertEquals(
+            View.GONE,
+            activity.findViewById<CircularProgressIndicator>(R.id.pb_loading_search_result).visibility
+        )
+    }
 }
