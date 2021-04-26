@@ -33,15 +33,6 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var detailsViewModel: DetailsViewModel
     private lateinit var binding: ActivityDetailsBinding
 
-    // Hold a reference to the current animator,
-    // so that it can be canceled mid-way.
-    private var currentAnimator: Animator? = null
-
-    // The system "short" animation time duration, in milliseconds. This
-    // duration is ideal for subtle animations or animations that occur
-    // very frequently.
-    private var shortAnimationDuration: Int = 0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         // Inject
         mainComponent = (application as MyApplication)
