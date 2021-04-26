@@ -1,8 +1,17 @@
 package de.sixbits.pixaclient.main.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.graphics.Point
+import android.graphics.Rect
+import android.graphics.RectF
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import de.sixbits.pixaclient.MyApplication
@@ -11,7 +20,6 @@ import de.sixbits.pixaclient.databinding.ActivityDetailsBinding
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.main.keys.IntentKeys
 import de.sixbits.pixaclient.main.view_model.DetailsViewModel
-import de.sixbits.pixaclient.main.view_model.MainViewModel
 import javax.inject.Inject
 
 private const val TAG = "DetailsActivity"
@@ -23,8 +31,16 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var mainComponent: MainComponent
 
     lateinit var detailsViewModel: DetailsViewModel
-
     private lateinit var binding: ActivityDetailsBinding
+
+    // Hold a reference to the current animator,
+    // so that it can be canceled mid-way.
+    private var currentAnimator: Animator? = null
+
+    // The system "short" animation time duration, in milliseconds. This
+    // duration is ideal for subtle animations or animations that occur
+    // very frequently.
+    private var shortAnimationDuration: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Inject
@@ -38,6 +54,19 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initViews()
+        initViewModels()
+
+        detailsViewModel.getImageDetails(intent.getIntExtra(IntentKeys.DETAILS_ID_KEY, -1))
+    }
+
+    private fun initViews() {
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    private fun initViewModels() {
         detailsViewModel = ViewModelProvider(this, viewModelFactory)
             .get(DetailsViewModel::class.java)
 
@@ -50,8 +79,5 @@ class DetailsActivity : AppCompatActivity() {
                 .load(it.image)
                 .into(binding.ivDetailsImage)
         })
-
-
-        detailsViewModel.getImageDetails(intent.getIntExtra(IntentKeys.DETAILS_ID_KEY, -1))
     }
 }
