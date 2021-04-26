@@ -74,6 +74,7 @@ class DetailsActivity : AppCompatActivity() {
             binding.tvDetailsComments.text = "${it.comments}"
             binding.tvDetailsLikes.text = "${it.likes}"
             binding.tvDetailsLove.text = "${it.favorites}"
+            binding.tvDetailsTags.text = it.tags
             binding.tvDetailsUsername.text = it.username
             Glide.with(this)
                 .load(it.image)
