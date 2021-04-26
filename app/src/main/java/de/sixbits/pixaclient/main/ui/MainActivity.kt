@@ -26,6 +26,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), OnImageClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     private lateinit var mainComponent: MainComponent
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
@@ -33,7 +34,8 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     private lateinit var searchRecyclerAdapter: SearchResultRecyclerAdapter
 
     private var loading = true
-    lateinit var activeLayoutManager: GridLayoutManager
+    private lateinit var activeLayoutManager: GridLayoutManager
+    private var canLoadMorePages = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +65,11 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
             searchRecyclerAdapter.switchItems(it)
         })
         mainViewModel.pagerLiveData.observe(this, {
-            searchRecyclerAdapter.addItemsToCurrent(it)
+            if (it.isNotEmpty()) {
+                searchRecyclerAdapter.addItemsToCurrent(it)
+            } else {
+                canLoadMorePages = false
+            }
         })
 
         // Handle Loading Events
@@ -79,11 +85,12 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     }
 
     private fun initViews() {
-        activeLayoutManager = if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
-            GridLayoutManager(this, 2)
-        } else {
-            GridLayoutManager(this, 1)
-        }
+        activeLayoutManager =
+            if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
+                GridLayoutManager(this, 2)
+            } else {
+                GridLayoutManager(this, 1)
+            }
 
         binding.rvSearchResult.layoutManager = activeLayoutManager
 
@@ -139,8 +146,11 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
                     val totalItemCount = activeLayoutManager.itemCount
                     val pastVisiblesItems = activeLayoutManager.findFirstVisibleItemPosition()
 
-                    if (loading && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                        mainViewModel.requestMore()
+                    // To save network requests
+                    if (loading && canLoadMorePages &&
+                        (visibleItemCount + pastVisiblesItems) >= totalItemCount
+                    ) {
+                        mainViewModel.requestMoreImage()
                     }
                 }
             }
