@@ -6,48 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".main.ui.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/container_header"
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
+        android:id="@+id/search_bar"
+        android:focusable="false"
+        android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/et_search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_search_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/search_query"
-                app:endIconDrawable="@drawable/ic_search"
-                app:endIconMode="custom"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_search_bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </FrameLayout>
+            app:commitIcon="@drawable/ic_search"
+            app:iconifiedByDefault="false"
+            app:queryHint="@string/search_query" />
+    </com.google.android.material.card.MaterialCardView>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_header">
+        app:layout_constraintTop_toBottomOf="@id/search_bar">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_result"
             android:layout_width="match_parent"
+            android:elevation="4dp"
             android:layout_height="match_parent"
             tools:listitem="@layout/row_images_list" />
 

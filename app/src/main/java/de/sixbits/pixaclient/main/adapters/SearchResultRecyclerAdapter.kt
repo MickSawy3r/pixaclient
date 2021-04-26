@@ -11,7 +11,7 @@ import de.sixbits.pixaclient.main.callbacks.OnImageClickListener
 import de.sixbits.pixaclient.network.model.ImageListItemModel
 
 class SearchResultRecyclerAdapter constructor(
-    private val searchResult: List<ImageListItemModel>,
+    private var searchResult: List<ImageListItemModel>,
     private val requestBuilder: RequestBuilder<Drawable>,
     private val onImageClickListener: OnImageClickListener
 ) :
@@ -40,7 +40,7 @@ class SearchResultRecyclerAdapter constructor(
         requestBuilder.load(searchResult[position].thumbnail)
             .into(holder.binding.ivImageItemThumbnail)
 
-        holder.binding.ivImageItemThumbnail.setOnClickListener{
+        holder.binding.ivImageItemThumbnail.setOnClickListener {
             onImageClickListener.onClick(searchResult[position].id)
         }
     }
@@ -56,5 +56,15 @@ class SearchResultRecyclerAdapter constructor(
 
     override fun getPreloadRequestBuilder(item: ImageListItemModel): RequestBuilder<*> {
         return requestBuilder.load(item)
+    }
+
+    fun switchItems(searchResult: List<ImageListItemModel>) {
+        this.searchResult = searchResult
+        notifyDataSetChanged()
+    }
+
+    fun addItemsToCurrent(searchResult: List<ImageListItemModel>) {
+        this.searchResult = this.searchResult + searchResult
+        notifyDataSetChanged()
     }
 }

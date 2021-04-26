@@ -35,7 +35,7 @@ class TestMainViewModel {
             .thenReturn(Observable.error(Exception("Error")))
         val mainViewModel = MainViewModel(mainRepository)
 
-        mainViewModel.imageListLiveData.observeForever {
+        mainViewModel.searchImagesLiveData.observeForever {
             assert(it.isEmpty())
         }
         mainViewModel.searchFor("query")
@@ -49,7 +49,7 @@ class TestMainViewModel {
             .thenReturn(Observable.just(listOf(ImageResponseFactory.getImageListItem())))
         val mainViewModel = MainViewModel(mainRepository)
 
-        mainViewModel.imageListLiveData.observeForever {
+        mainViewModel.searchImagesLiveData.observeForever {
             assert(it.isNotEmpty())
         }
         mainViewModel.searchFor("query")
@@ -63,7 +63,7 @@ class TestMainViewModel {
 
         val mainViewModel = MainViewModel(mainRepository)
 
-        mainViewModel.imageListLiveData.observeForever {
+        mainViewModel.searchImagesLiveData.observeForever {
             assert(it.isNotEmpty())
         }
 
@@ -78,7 +78,7 @@ class TestMainViewModel {
 
         val mainViewModel = MainViewModel(mainRepository)
 
-        mainViewModel.imageListLiveData.observeForever {
+        mainViewModel.searchImagesLiveData.observeForever {
             assert(it.isEmpty())
         }
 

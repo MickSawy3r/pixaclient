@@ -11,7 +11,8 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(private val mainRepository: MainRepository) : ViewModel() {
 
-    val imageListLiveData = MutableLiveData<List<ImageListItemModel>>()
+    val searchImagesLiveData = MutableLiveData<List<ImageListItemModel>>()
+    val pagerLiveData = MutableLiveData<List<ImageListItemModel>>()
     val loadingLiveData = MutableLiveData<Boolean>()
 
     fun getCachedImages() {
@@ -22,7 +23,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                imageListLiveData.postValue(it)
+                searchImagesLiveData.postValue(it)
                 loadingLiveData.postValue(false)
             }
         compositeDisposable.add(cachedObservable)
@@ -36,10 +37,10 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                imageListLiveData.postValue(it)
+                searchImagesLiveData.postValue(it)
                 loadingLiveData.postValue(false)
             }, {
-                imageListLiveData.postValue(listOf())
+                searchImagesLiveData.postValue(listOf())
             })
         compositeDisposable.add(cachedObservable)
     }
