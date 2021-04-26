@@ -4,7 +4,7 @@ import android.app.Application
 import de.sixbits.pixaclient.di.AppComponent
 import de.sixbits.pixaclient.di.DaggerAppComponent
 
-class MyApplication : Application() {
+open class MyApplication : Application() {
     val appComponent: AppComponent by lazy {
         initializeComponent()
     }
