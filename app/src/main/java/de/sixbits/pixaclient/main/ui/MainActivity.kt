@@ -1,11 +1,13 @@
 package de.sixbits.pixaclient.main.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.view.View.*
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,9 +23,11 @@ import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.main.adapters.SearchResultRecyclerAdapter
 import de.sixbits.pixaclient.main.callbacks.OnImageClickListener
 import de.sixbits.pixaclient.main.keys.IntentKeys
+import de.sixbits.pixaclient.main.utils.NetworkUtils
 import de.sixbits.pixaclient.main.view_model.MainViewModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), OnImageClickListener {
     @Inject
@@ -45,9 +49,9 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initViewModel()
         initViews()
         initRecyclerView()
-        initViewModel()
     }
 
     private fun initViewModel() {
@@ -71,12 +75,8 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
                 binding.rvSearchResult.visibility = VISIBLE
             }
         })
-
-        // initiating the first view
-        mainViewModel.searchFor("Fruits")
     }
 
-    @SuppressLint("SetTextI18n")
     private fun initViews() {
         if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
             binding.rvSearchResult.layoutManager = GridLayoutManager(this, 2)
@@ -84,16 +84,25 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
             binding.rvSearchResult.layoutManager = GridLayoutManager(this, 1)
         }
 
-        binding.etSearchBar.setOnSearchClickListener {
-            // Request the search
+        if (NetworkUtils.isInternetAvailable(this)) {
+            binding.etSearchBar.setOnSearchClickListener {
+                // Request the search
+                mainViewModel.searchFor(binding.etSearchBar.query.toString())
+            }
+            binding.etSearchBar.setQuery("Fruits", true)
             mainViewModel.searchFor(binding.etSearchBar.query.toString())
+        } else {
+            binding.etSearchBar.isClickable = false
+            binding.etSearchBar.setQuery("Offline Mode", true)
+            mainViewModel.getCachedImages()
         }
-        binding.etSearchBar.setQuery("Fruits", false)
     }
 
     private fun initRecyclerView() {
         // For Preloading images
-        val searchRecyclerRequestBuilder = Glide.with(this).asDrawable()
+        val searchRecyclerRequestBuilder = Glide
+            .with(this)
+            .asDrawable()
         val preloadSizeProvider = ViewPreloadSizeProvider<ImageListItemModel>()
 
         // initially we have no items

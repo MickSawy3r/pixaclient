@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.ListPreloader
 import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import de.sixbits.pixaclient.databinding.RowImagesListBinding
 import de.sixbits.pixaclient.main.callbacks.OnImageClickListener
 import de.sixbits.pixaclient.network.model.ImageListItemModel
@@ -37,7 +38,9 @@ class SearchResultRecyclerAdapter constructor(
     override fun onBindViewHolder(holder: SearchResultRecyclerViewHolder, position: Int) {
         holder.binding.tvImageItemUsername.text = searchResult[position].username
         holder.binding.tvImageItemTags.text = searchResult[position].tags
-        requestBuilder.load(searchResult[position].thumbnail)
+        requestBuilder
+            .load(searchResult[position].thumbnail)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.binding.ivImageItemThumbnail)
 
         holder.binding.ivImageItemThumbnail.setOnClickListener {

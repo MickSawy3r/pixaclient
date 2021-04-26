@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             app:commitIcon="@drawable/ic_search"
             app:iconifiedByDefault="false"
+            android:focusable="false"
             app:queryHint="@string/search_query" />
     </com.google.android.material.card.MaterialCardView>
 
