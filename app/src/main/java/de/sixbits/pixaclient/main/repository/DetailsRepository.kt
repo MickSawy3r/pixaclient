@@ -14,8 +14,6 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-private const val TAG = "DetailsRepository"
-
 class DetailsRepository @Inject constructor(
     private val pixabayManager: PixabayManager,
     private val cacheDao: CacheDao,

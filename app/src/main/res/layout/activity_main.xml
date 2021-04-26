@@ -47,6 +47,7 @@
             android:id="@+id/rv_search_result"
             android:layout_width="match_parent"
             android:elevation="4dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             tools:listitem="@layout/row_images_list" />
 
@@ -55,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

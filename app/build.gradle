@@ -157,6 +157,7 @@ dependencies {
     // region Junit libs, I shall be using JUnit 5
     // (Required) Writing and executing Unit Tests on the JUnit Platform
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junit5_version"
+    testImplementation "org.mockito:mockito-junit-jupiter:$mockito_version"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit5_version"
 
     // (Optional) If you need "Parameterized Tests"

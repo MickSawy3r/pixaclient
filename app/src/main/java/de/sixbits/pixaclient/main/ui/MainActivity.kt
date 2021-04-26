@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,6 +24,7 @@ import de.sixbits.pixaclient.main.keys.IntentKeys
 import de.sixbits.pixaclient.main.utils.NetworkUtils
 import de.sixbits.pixaclient.main.view_model.MainViewModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel
+import org.jetbrains.annotations.TestOnly
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnImageClickListener {
@@ -31,12 +33,13 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
 
     private lateinit var mainComponent: MainComponent
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var binding: ActivityMainBinding
 
+    // UI Links
+    private lateinit var binding: ActivityMainBinding
     private lateinit var searchRecyclerAdapter: SearchResultRecyclerAdapter
 
+    // State Variable
     private var loading = true
-    private lateinit var activeLayoutManager: GridLayoutManager
     private var canLoadMorePages = true
 
 
@@ -64,8 +67,11 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
 
         // Handle data response
         mainViewModel.searchImagesLiveData.observe(this, {
+            binding.pbLoadingSearchResult.visibility = GONE
+            binding.rvSearchResult.visibility = VISIBLE
             searchRecyclerAdapter.switchItems(it)
         })
+
         mainViewModel.pagerLiveData.observe(this, {
             if (it.isNotEmpty()) {
                 searchRecyclerAdapter.addItemsToCurrent(it)
@@ -78,7 +84,7 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
         mainViewModel.loadingLiveData.observe(this, {
             if (it) {
                 binding.pbLoadingSearchResult.visibility = VISIBLE
-                binding.rvSearchResult.visibility = INVISIBLE
+                binding.rvSearchResult.visibility = GONE
             } else {
                 binding.pbLoadingSearchResult.visibility = GONE
                 binding.rvSearchResult.visibility = VISIBLE
@@ -87,18 +93,11 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     }
 
     private fun initViews() {
-        activeLayoutManager =
-            if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
-                GridLayoutManager(this, 2)
-            } else {
-                GridLayoutManager(this, 1)
-            }
-
-        binding.rvSearchResult.layoutManager = activeLayoutManager
-
         if (NetworkUtils.isInternetAvailable(this)) {
             binding.etSearchBar.setOnSearchClickListener {
                 // Request the search
+                binding.pbLoadingSearchResult.visibility = VISIBLE
+                binding.rvSearchResult.visibility = GONE
                 mainViewModel.searchFor(binding.etSearchBar.query.toString())
             }
             binding.etSearchBar.setQuery("Fruits", true)
@@ -113,6 +112,10 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     }
 
     private fun initRecyclerView() {
+        val activeLayoutManager = LinearLayoutManager(this)
+
+        binding.rvSearchResult.layoutManager = activeLayoutManager
+
         // For Preloading images
         val searchRecyclerRequestBuilder = Glide
             .with(this)
@@ -175,5 +178,10 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
                 // Respond to positive button press
             }
             .show()
+    }
+
+    @TestOnly
+    fun setTestViewModel(testViewModel: MainViewModel) {
+        mainViewModel = testViewModel
     }
 }

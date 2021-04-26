@@ -11,10 +11,14 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class Tests {
     @get:Rule
-    val mainActivity = ActivityScenarioRule(MainActivity::class.java)
+    val mainScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
     fun testMainFlow() {
+        // when the app is running
         launchActivity<MainActivity>()
+
+        // and i request a search query "dogs"
+
     }
 }

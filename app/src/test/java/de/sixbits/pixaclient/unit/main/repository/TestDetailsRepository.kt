@@ -1,5 +1,6 @@
 package de.sixbits.pixaclient.unit.main.repository
 
+import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.sixbits.pixaclient.ImageResponseFactory
 import de.sixbits.pixaclient.database.dao.CacheDao
@@ -52,7 +53,8 @@ class TestDetailsRepository {
 
         var detailsRepository = DetailsRepository(
             cacheDao = cacheDao,
-            pixabayManager = pixabayManager
+            pixabayManager = pixabayManager,
+            application = Mockito.mock(Application::class.java)
         )
 
         detailsRepository.getImageDetails(123)
@@ -71,7 +73,11 @@ class TestDetailsRepository {
             .thenReturn(Completable.complete())
 
         detailsRepository =
-            DetailsRepository(cacheDao = cacheDao, pixabayManager = pixabayManager)
+            DetailsRepository(
+                cacheDao = cacheDao,
+                pixabayManager = pixabayManager,
+                application = Mockito.mock(Application::class.java)
+            )
 
         detailsRepository.getImageDetails(123)
             .subscribeOn(Schedulers.io())
