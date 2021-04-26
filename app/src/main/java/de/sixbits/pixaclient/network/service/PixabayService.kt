@@ -10,7 +10,9 @@ interface PixabayService {
     @GET("/api/")
     fun getSearchResult(
         @Query("q") query: String,
-        @Query("key") apiKey: String
+        @Query("key") apiKey: String,
+        @Query("page") page: Int = 1,
+        @Query("per_page") perPage: Int = 10
     ): Observable<PixabaySearchResponse>
 
     @GET("/api/")

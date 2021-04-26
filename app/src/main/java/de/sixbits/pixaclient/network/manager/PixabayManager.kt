@@ -22,9 +22,16 @@ open class PixabayManager @Inject constructor(private val pixabayService: Pixaba
      * comes to the view layer.
      */
     fun getSearchResult(searchQuery: String): Observable<List<ImageListItemModel>> {
+        return getSearchResultPage(searchQuery, 1)
+    }
+
+    fun getSearchResultPage(
+        searchQuery: String,
+        pageNumber: Int
+    ): Observable<List<ImageListItemModel>> {
         // The PIXABAY_KEY is provided in the sent email via local.properties file
         // since it should not be leaked. For more info view the README.md
-        return pixabayService.getSearchResult(searchQuery, BuildConfig.PIXABAY_KEY)
+        return pixabayService.getSearchResult(searchQuery, BuildConfig.PIXABAY_KEY, pageNumber)
             .map {
                 val result = mutableListOf<ImageListItemModel>()
                 it.hits.forEach { hit ->

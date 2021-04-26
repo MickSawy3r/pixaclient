@@ -15,6 +15,9 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     val pagerLiveData = MutableLiveData<List<ImageListItemModel>>()
     val loadingLiveData = MutableLiveData<Boolean>()
 
+    lateinit var activeSearchQuery: String
+    var activePage = 1
+
     fun getCachedImages() {
         loadingLiveData.postValue(true)
 
@@ -30,6 +33,8 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     }
 
     fun searchFor(query: String) {
+        activeSearchQuery = query
+        activePage = 1
         loadingLiveData.postValue(true)
 
         val compositeDisposable = CompositeDisposable()
@@ -41,6 +46,22 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
                 loadingLiveData.postValue(false)
             }, {
                 searchImagesLiveData.postValue(listOf())
+            })
+        compositeDisposable.add(cachedObservable)
+    }
+
+    fun requestMore() {
+        activePage++
+        loadingLiveData.postValue(true)
+
+        val compositeDisposable = CompositeDisposable()
+        val cachedObservable = mainRepository.requestSearchPage(activeSearchQuery, activePage)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                pagerLiveData.postValue(it)
+            }, {
+                pagerLiveData.postValue(listOf())
             })
         compositeDisposable.add(cachedObservable)
     }

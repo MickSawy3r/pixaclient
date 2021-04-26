@@ -1,12 +1,7 @@
 package de.sixbits.pixaclient.main.ui
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
-import android.text.InputType
 import android.view.View.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +23,6 @@ import de.sixbits.pixaclient.main.view_model.MainViewModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel
 import javax.inject.Inject
 
-
 class MainActivity : AppCompatActivity(), OnImageClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,6 +31,10 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var searchRecyclerAdapter: SearchResultRecyclerAdapter
+
+    private var loading = true
+    lateinit var activeLayoutManager: GridLayoutManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mainComponent = (application as MyApplication)
@@ -64,6 +62,9 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
         mainViewModel.searchImagesLiveData.observe(this, {
             searchRecyclerAdapter.switchItems(it)
         })
+        mainViewModel.pagerLiveData.observe(this, {
+            searchRecyclerAdapter.addItemsToCurrent(it)
+        })
 
         // Handle Loading Events
         mainViewModel.loadingLiveData.observe(this, {
@@ -78,11 +79,13 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     }
 
     private fun initViews() {
-        if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
-            binding.rvSearchResult.layoutManager = GridLayoutManager(this, 2)
+        activeLayoutManager = if (resources.configuration.orientation == OrientationHelper.HORIZONTAL) {
+            GridLayoutManager(this, 2)
         } else {
-            binding.rvSearchResult.layoutManager = GridLayoutManager(this, 1)
+            GridLayoutManager(this, 1)
         }
+
+        binding.rvSearchResult.layoutManager = activeLayoutManager
 
         if (NetworkUtils.isInternetAvailable(this)) {
             binding.etSearchBar.setOnSearchClickListener {
@@ -125,8 +128,23 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
         searchRecyclerAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
-        // attaching the preloader
+        // attaching the preLoader
         binding.rvSearchResult.addOnScrollListener(preLoader)
+
+        // Attach Infinite Scroll
+        binding.rvSearchResult.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) { //check for scroll down
+                    val visibleItemCount = activeLayoutManager.childCount
+                    val totalItemCount = activeLayoutManager.itemCount
+                    val pastVisiblesItems = activeLayoutManager.findFirstVisibleItemPosition()
+
+                    if (loading && (visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                        mainViewModel.requestMore()
+                    }
+                }
+            }
+        })
     }
 
     override fun onClick(id: Int) {

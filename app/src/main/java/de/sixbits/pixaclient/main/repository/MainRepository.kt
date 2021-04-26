@@ -15,6 +15,10 @@ open class MainRepository @Inject constructor(
         return this.pixabayManager.getSearchResult(query)
     }
 
+    fun requestSearchPage(query: String, pageNumber: Int): Observable<List<ImageListItemModel>> {
+        return this.pixabayManager.getSearchResultPage(query, pageNumber)
+    }
+
     fun getCached(): Observable<List<ImageListItemModel>> {
         return this.cacheDao.getAll()
             .map {
