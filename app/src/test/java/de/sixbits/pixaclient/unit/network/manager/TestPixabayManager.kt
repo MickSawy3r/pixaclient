@@ -6,7 +6,6 @@ import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.service.PixabayService
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import org.junit.Before
@@ -44,11 +43,8 @@ class TestPixabayManager {
             .thenReturn(Observable.just(PixabayResponseFactory.getResponse()))
 
         pixabayManager.getSearchResult(searchQuery)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                assert(it.size == 1)
-            }
+            .test()
+            .assertValue { it.size == 1 }
 
         // endregion
 
@@ -58,10 +54,9 @@ class TestPixabayManager {
             .thenReturn(Observable.just(PixabayResponseFactory.getZeroResponse()))
 
         pixabayManager.getSearchResult(searchQuery)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                assert(it.isEmpty())
+            .test()
+            .assertValue {
+                it.isEmpty()
             }
         // endregion
 
@@ -71,13 +66,10 @@ class TestPixabayManager {
             .thenReturn(Observable.error(Exception("Bad Response")))
 
         pixabayManager.getSearchResult(searchQuery)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                assert(false)
-            }, {
-                assert(true)
-            })
+            .test()
+            .assertError {
+                true
+            }
         // endregion
     }
 }
