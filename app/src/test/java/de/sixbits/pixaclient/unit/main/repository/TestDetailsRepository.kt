@@ -65,13 +65,8 @@ class TestDetailsRepository {
         )
 
         detailsRepository.getImageDetails(123)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ response ->
-                assert(detailsItem.id == response.id)
-            }, {
-                throw Exception(it.message)
-            })
+            .test()
+            .assertValue { detailsItem.id == it.id }
 
         // Test when a network error
         Mockito.`when`(pixabayManager.getImageDetails(123))
@@ -88,12 +83,7 @@ class TestDetailsRepository {
             )
 
         detailsRepository.getImageDetails(123)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                assert(false)
-            }, {
-                assert(it.message == "No Response")
-            })
+            .test()
+            .assertError { it.message == "No Response" }
     }
 }

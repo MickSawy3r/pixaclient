@@ -40,11 +40,11 @@ class TestMainRepository {
         val mainRepository = MainRepository(cacheDao = cacheDao, pixabayManager = pixabayManager)
 
         mainRepository.getCached()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                assert(it.size == 1)
-                assert(it[0].id == expectedCache[0].id)
+            .test()
+            .assertValue {
+                it.size == 1
+            }.assertValue {
+                it[0].id == expectedCache[0].id
             }
     }
 
@@ -61,11 +61,11 @@ class TestMainRepository {
         val mainRepository = MainRepository(cacheDao = cacheDao, pixabayManager = pixabayManager)
 
         mainRepository.searchFor("Query")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                assert(it.size == 1)
-                assert(it[0].id == expectedCache[0].id)
+            .test()
+            .assertValue {
+                it.size == 1
+            }.assertValue {
+                it[0].id == expectedCache[0].id
             }
     }
 }

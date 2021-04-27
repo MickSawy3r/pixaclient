@@ -2,6 +2,7 @@ package de.sixbits.pixaclient.cucumber
 
 import de.sixbits.pixaclient.config.Consts
 import de.sixbits.pixaclient.network.manager.PixabayManager
+import de.sixbits.pixaclient.network.model.ImageDetailsModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel
 import de.sixbits.pixaclient.network.service.PixabayService
 import io.cucumber.java8.En
@@ -45,22 +46,22 @@ class pixabaySteps : En {
         }
         Then("I get an images list result") {
             searchObservable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    assert(it.isNotEmpty())
-                }
+                .test()
+                .assertValue { it.isNotEmpty() }
         }
         When("I request an image with a valid id {int}") { imageId: Int ->
-
+            detailsObservable = pixabayManager.getImageDetails(imageId)
         }
         Then("I should get an Image from user {string}") { authorName: String ->
-
+            detailsObservable
+                .test()
+                .assertValue { it.username == authorName }
         }
     }
 
     companion object {
         lateinit var pixabayManager: PixabayManager
         lateinit var searchObservable: Observable<List<ImageListItemModel>>
+        lateinit var detailsObservable: Observable<ImageDetailsModel>
     }
 }
