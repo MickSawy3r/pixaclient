@@ -1,10 +1,12 @@
-package de.sixbits.pixaclient.view_model
+package de.sixbits.pixaclient.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
+import de.sixbits.pixaclient.di.ViewModelFactory
+import de.sixbits.pixaclient.di.ViewModelKey
 import de.sixbits.pixaclient.main.view_model.DetailsViewModel
 import de.sixbits.pixaclient.main.view_model.MainViewModel
 

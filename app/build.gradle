@@ -191,10 +191,15 @@ dependencies {
     // region AndroidX Test Extentions
     androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espresso_version"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:$ui_automator_version"
     // endregion
 
     // region Roboelectric
     testImplementation 'org.robolectric:robolectric:4.4'
+    // endregion
+
+    // region for testing network requests
+    implementation "io.americanexpress.busybee:busybee-android:0.0.3"
     // endregion
 }

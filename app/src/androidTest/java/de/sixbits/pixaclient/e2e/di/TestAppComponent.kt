@@ -8,7 +8,7 @@ import de.sixbits.pixaclient.database.DatabaseComponent
 import de.sixbits.pixaclient.e2e.TestMyApplication
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
-import de.sixbits.pixaclient.view_model.ViewModelModule
+import de.sixbits.pixaclient.di.ViewModelModule
 import javax.inject.Singleton
 
 @Singleton

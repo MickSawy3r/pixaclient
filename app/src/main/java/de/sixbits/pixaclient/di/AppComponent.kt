@@ -1,7 +1,6 @@
 package de.sixbits.pixaclient.di
 
 import android.app.Application
-import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -9,7 +8,6 @@ import de.sixbits.pixaclient.MyApplication
 import de.sixbits.pixaclient.database.DatabaseComponent
 import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
-import de.sixbits.pixaclient.view_model.ViewModelModule
 import javax.inject.Singleton
 
 

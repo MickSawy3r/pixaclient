@@ -1,4 +1,4 @@
-package de.sixbits.pixaclient.view_model
+package de.sixbits.pixaclient.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
