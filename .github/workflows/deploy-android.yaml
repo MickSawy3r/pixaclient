@@ -60,13 +60,13 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: release-apk
-          path: build/app/outputs/apk/app-release.apk
+          path: app/build/outputs/apk/app-release.apk
 
       - name: Upload AAB to Github
         uses: actions/upload-artifact@v1
         with:
           name: release-aab
-          path: build/app/outputs/bundle/release/app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
 
       - name: Create release and upload apk
         uses: underwindfall/create-release-with-debugapk@v2.0.0
@@ -74,6 +74,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.run_number }}
-          asset_path: build/app/outputs/apk/app-release.apk
+          asset_path: app/build/outputs/apk/app-release.apk
           asset_name: release.apk
           asset_content_type: application/zip
