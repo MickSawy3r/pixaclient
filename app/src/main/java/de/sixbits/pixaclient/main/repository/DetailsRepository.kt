@@ -1,15 +1,12 @@
 package de.sixbits.pixaclient.main.repository
 
 import android.app.Application
-import android.util.Log
-import de.sixbits.pixaclient.MyApplication
 import de.sixbits.pixaclient.database.dao.CacheDao
 import de.sixbits.pixaclient.database.utils.ImageEntityMapper
-import de.sixbits.pixaclient.main.utils.NetworkUtils
 import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.model.ImageDetailsModel
 import de.sixbits.pixaclient.network.utils.ImageDetailsMapper
-import de.sixbits.pixaclient.network.utils.ImageListMapper
+import de.sixbits.pixaclient.network.utils.NetworkUtils
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -17,7 +14,8 @@ import javax.inject.Inject
 class DetailsRepository @Inject constructor(
     private val pixabayManager: PixabayManager,
     private val cacheDao: CacheDao,
-    private val application: Application
+    private val application: Application,
+    private val networkUtils: NetworkUtils
 ) {
 
     /**
@@ -27,7 +25,7 @@ class DetailsRepository @Inject constructor(
     fun getImageDetails(id: Int): Observable<ImageDetailsModel> {
         // When we get the data, cache it without consuming it.
 
-        if (NetworkUtils.isInternetAvailable(application)) {
+        if (networkUtils.isInternetAvailable()) {
             return this.pixabayManager.getImageDetails(id)
                 .doOnNext {
                     // Cache the result

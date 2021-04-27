@@ -2,8 +2,8 @@ package de.sixbits.pixaclient.main.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View.*
-import android.widget.SearchView
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -19,15 +19,17 @@ import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.main.adapters.SearchResultRecyclerAdapter
 import de.sixbits.pixaclient.main.callbacks.OnImageClickListener
 import de.sixbits.pixaclient.main.keys.IntentKeys
-import de.sixbits.pixaclient.main.utils.NetworkUtils
 import de.sixbits.pixaclient.main.view_model.MainViewModel
 import de.sixbits.pixaclient.network.model.ImageListItemModel
+import de.sixbits.pixaclient.network.utils.NetworkUtils
 import org.jetbrains.annotations.TestOnly
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnImageClickListener {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var networkUtils: NetworkUtils
 
     private lateinit var mainComponent: MainComponent
     private lateinit var mainViewModel: MainViewModel
@@ -94,7 +96,7 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
     }
 
     private fun initViews() {
-        if (NetworkUtils.isInternetAvailable(this)) {
+        if (networkUtils.isInternetAvailable()) {
             binding.etSearchBar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     binding.pbLoadingSearchResult.visibility = VISIBLE
@@ -163,7 +165,7 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
                     if (loading && canLoadMorePages &&
                         (visibleItemCount + pastVisiblesItems) >= totalItemCount
                     ) {
-                        if (NetworkUtils.isInternetAvailable(recyclerView.context)) {
+                        if (networkUtils.isInternetAvailable()) {
                             mainViewModel.requestMoreImage()
                         }
                     }

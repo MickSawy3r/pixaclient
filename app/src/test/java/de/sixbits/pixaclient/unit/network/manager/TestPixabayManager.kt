@@ -23,7 +23,7 @@ class TestPixabayManager {
     lateinit var pixabayManager: PixabayManager
     lateinit var pixabayService: PixabayService
 
-    @Before()
+    @Before
     fun setup() {
         // Prepairing RX
         RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }

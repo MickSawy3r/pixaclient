@@ -1,6 +1,5 @@
 package de.sixbits.pixaclient.e2e
 
-import android.app.Application
 import de.sixbits.pixaclient.MyApplication
 import de.sixbits.pixaclient.e2e.di.DaggerTestAppComponent
 import de.sixbits.pixaclient.e2e.di.TestAppComponent

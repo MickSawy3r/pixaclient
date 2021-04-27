@@ -17,6 +17,7 @@ import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
 import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.service.PixabayService
+import de.sixbits.pixaclient.network.utils.NetworkUtils
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -51,6 +52,12 @@ open class AppModule {
     ): RequestManager {
         return Glide.with(application)
             .setDefaultRequestOptions(requestOptions)
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetworkUtils(application: Application): NetworkUtils {
+        return NetworkUtils(application)
     }
 
     @Singleton

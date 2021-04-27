@@ -1,15 +1,17 @@
-package de.sixbits.pixaclient.main.utils
+package de.sixbits.pixaclient.network.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
+import javax.inject.Inject
 
 private const val TAG = "NetworkUtils"
 
-object NetworkUtils {
-    fun isInternetAvailable(context: Context): Boolean {
+class NetworkUtils @Inject constructor(private val context: Context) {
+
+    fun isInternetAvailable(): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkCapabilities = connectivityManager.activeNetwork ?: return false

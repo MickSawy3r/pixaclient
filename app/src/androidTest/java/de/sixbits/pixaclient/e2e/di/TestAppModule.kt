@@ -15,6 +15,7 @@ import de.sixbits.pixaclient.main.MainComponent
 import de.sixbits.pixaclient.network.NetworkComponent
 import de.sixbits.pixaclient.network.manager.PixabayManager
 import de.sixbits.pixaclient.network.service.PixabayService
+import de.sixbits.pixaclient.network.utils.NetworkUtils
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -28,6 +29,12 @@ import javax.inject.Singleton
     ]
 )
 open class TestAppModule {
+
+    @Singleton
+    @Provides
+    fun provideNetworkUtils(application: Application): NetworkUtils {
+        return NetworkUtils(application)
+    }
 
     @Singleton
     @Provides
