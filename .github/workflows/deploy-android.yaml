@@ -53,6 +53,7 @@ jobs:
 
       - name: Distribute app to Alpha track 🚀
         run: |
+          chmode +x gradlew
           bundle exec fastlane deploy
 
       - name: Upload APK to Github
