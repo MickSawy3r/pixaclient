@@ -61,7 +61,6 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     fun requestMoreImage() {
         activePage++
-        loadingLiveData.postValue(true)
         busyBee.busyWith(activeSearchQuery, BusyBee.Category.NETWORK)
         val pagerObservable = mainRepository.requestSearchPage(activeSearchQuery, activePage)
             .subscribeOn(Schedulers.io())
