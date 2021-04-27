@@ -2,6 +2,11 @@
 
 An android client for Pixabay API
 
+## Info
+
+A white screen was showing when scrolling down, I fixed it and created a new release.
+Please check it using the releases tab in github repo here :smile:
+
 ## Overview
 
 A small project to work as a client for pixabay.com services. you can test the application yourself using the releases tab in this project.
