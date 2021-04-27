@@ -11,6 +11,7 @@ open class MainRepository @Inject constructor(
     private val pixabayManager: PixabayManager,
     private val cacheDao: CacheDao
 ) {
+
     fun searchFor(query: String): Observable<List<ImageListItemModel>> {
         return this.pixabayManager.getSearchResult(query)
     }

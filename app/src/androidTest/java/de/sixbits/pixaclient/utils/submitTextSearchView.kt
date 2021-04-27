@@ -10,7 +10,7 @@ import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 
 
-class typeTextSearchView(private val text: String) :
+class submitTextSearchView(private val text: String) :
     ViewAction {
     override fun getConstraints(): Matcher<View> {
         return allOf(isDisplayed(), isAssignableFrom(SearchView::class.java))
@@ -21,6 +21,6 @@ class typeTextSearchView(private val text: String) :
     }
 
     override fun perform(uiController: UiController, view: View) {
-        (view as SearchView).setQuery(text, false)
+        (view as SearchView).setQuery(text, true)
     }
 }

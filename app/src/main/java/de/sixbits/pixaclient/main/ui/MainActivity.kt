@@ -3,13 +3,11 @@ package de.sixbits.pixaclient.main.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View.*
-import android.widget.EditText
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.recyclerview.RecyclerViewPreloader
@@ -97,14 +95,19 @@ class MainActivity : AppCompatActivity(), OnImageClickListener {
 
     private fun initViews() {
         if (NetworkUtils.isInternetAvailable(this)) {
-            binding.etSearchBar.setOnSearchClickListener {
-                // Request the search
-                binding.pbLoadingSearchResult.visibility = VISIBLE
-                binding.rvSearchResult.visibility = GONE
-                mainViewModel.searchFor(binding.etSearchBar.query.toString())
-            }
+            binding.etSearchBar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    binding.pbLoadingSearchResult.visibility = VISIBLE
+                    binding.rvSearchResult.visibility = GONE
+                    mainViewModel.searchFor(binding.etSearchBar.query.toString())
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    return false
+                }
+            })
             binding.etSearchBar.setQuery("Fruits", true)
-            mainViewModel.searchFor(binding.etSearchBar.query.toString())
         } else {
             binding.searchDisableOverlay.visibility = VISIBLE
             binding.searchDisableOverlay.setOnClickListener {

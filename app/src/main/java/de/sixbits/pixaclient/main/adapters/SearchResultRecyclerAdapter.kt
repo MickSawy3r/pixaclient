@@ -43,7 +43,7 @@ class SearchResultRecyclerAdapter constructor(
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(holder.binding.ivImageItemThumbnail)
 
-        holder.binding.ivImageItemThumbnail.setOnClickListener {
+        holder.binding.cardImage.setOnClickListener {
             onImageClickListener.onClick(searchResult[position].id)
         }
     }
